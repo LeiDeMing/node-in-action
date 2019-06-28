@@ -1,3 +1,6 @@
+const http=require('http');
+const fs=require('fs');
+
 // const fs=require('fs').createReadStream('../shi.txt',{heighWaterMark:10})
 // var data=[]
 // fs.on('data',(chunk)=>{
@@ -9,12 +12,12 @@
 //     console.log(buf.toString())
 // })
 
-// const fs=require('fs')
+
 // let txt=fs.readFileSync('../shi.txt',{encoding:'utf-8'})
 // console.log(txt)
 
 //遍历文件
-// const fs=require('fs')
+
 
 // function getAllFileFromPath(path){
 //     fs.readdir(path,(err,res)=>{
@@ -32,7 +35,7 @@
 // getAllFileFromPath('d:/AATemp')
 
 //创建http服务器
-// let http=require('http')
+
 // let server=http.createServer((req,res)=>{
 //     res.writeHead('200',{'Content-Type':'text/plain'});
 //     res.end('Hello Node');
@@ -46,8 +49,7 @@
 // server.listen(8080)
 
 //静态文件服务器
-// const http=require('http')
-// const fs=require('fs')
+
 // let server=http.createServer((req,res)=>{
 //     let path=req.url
 //     console.log(req)
@@ -72,3 +74,38 @@
 // })
 // server.listen(8080);
 // console.log('Server Start')
+
+//提交表单
+// const server=http.createServer((req,res)=>{
+//     const {method,url} = req
+//     let data=[]
+//     req.on('data',(chunk)=>{
+//         data.push(chunk)
+//     })
+//     req.on('end',()=>{
+//         console.log(Buffer.concat(data).toString())
+//         console.log('传输结束')
+//     })
+//     if(url==='/login'){
+//         switch(method){
+//             case 'POST':
+//                 console.log('post');
+//                 break;
+//             case 'GET' :
+//                 fs.createReadStream('login.html').pipe(res);
+//                 break;
+//             default :
+//                 console.log('other request!')
+    
+//         }
+//     }else{
+//         res.writeHead('302',{
+//             'Location':'/login'
+//         })
+//         res.end()
+//     }
+// })
+// server.listen(8080)
+// console.log('server start')
+
+//
