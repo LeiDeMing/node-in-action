@@ -1,4 +1,4 @@
-const http=require('https');
+const http=require('http');
 const fs=require('fs');
 
 // const fs=require('fs').createReadStream('../shi.txt',{heighWaterMark:10})
@@ -109,18 +109,39 @@ const fs=require('fs');
 // console.log('server start')
 
 //http客户端服务
-http.get('https://www.blockchain.com/ticker',res=>{
-    const {statusCode} = res
-    if(statusCode===200){
-        let data=[]
-        res.on('data',(chunk)=>{
-            data.push(chunk)
+// http.get('https://www.blockchain.com/ticker',res=>{
+//     const {statusCode} = res
+//     if(statusCode===200){
+//         let data=[]
+//         res.on('data',(chunk)=>{
+//             data.push(chunk)
+//         })
+//         res.on('end',()=>{
+//             console.log(Buffer.concat(data).toString())
+//         })
+//         res.on('error',err=>{
+//             console.log(err)
+//         })
+//     }
+// })
+//代理服务器
+const server=http.createServer((req,res)=>{
+    let url = req.url.substring(1,req.url.length);
+    let requestProxy=http.request(url,pres=>{
+        res.writeHead(pres.statusCode,pres.headers);
+        pres.on('data',data=>{
+            res.write(data)
         })
-        res.on('end',()=>{
-            console.log(Buffer.concat(data).toString())
+        pres.on('end',()=>{
+            res.end()
         })
-        res.on('error',err=>{
-            console.log(err)
-        })
-    }
+    })
+    req.on('data',data=>{
+        requestProxy.write(data)
+    })
+    req.on('end',()=>{
+        requestProxy.end();
+    })
 })
+server.listen(8080)
+console.log('server start ')
