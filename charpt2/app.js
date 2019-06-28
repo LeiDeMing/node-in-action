@@ -1,6 +1,6 @@
-const http=require('http');
-const fs=require('fs');
-
+var http=require('http');
+var fs=require('fs');
+var net=require('net');
 // const fs=require('fs').createReadStream('../shi.txt',{heighWaterMark:10})
 // var data=[]
 // fs.on('data',(chunk)=>{
@@ -17,8 +17,6 @@ const fs=require('fs');
 // console.log(txt)
 
 //遍历文件
-
-
 // function getAllFileFromPath(path){
 //     fs.readdir(path,(err,res)=>{
 //         for(let statPath of res){
@@ -35,7 +33,6 @@ const fs=require('fs');
 // getAllFileFromPath('d:/AATemp')
 
 //创建http服务器
-
 // let server=http.createServer((req,res)=>{
 //     res.writeHead('200',{'Content-Type':'text/plain'});
 //     res.end('Hello Node');
@@ -49,7 +46,6 @@ const fs=require('fs');
 // server.listen(8080)
 
 //静态文件服务器
-
 // let server=http.createServer((req,res)=>{
 //     let path=req.url
 //     console.log(req)
@@ -124,24 +120,38 @@ const fs=require('fs');
 //         })
 //     }
 // })
+
 //代理服务器
-const server=http.createServer((req,res)=>{
-    let url = req.url.substring(1,req.url.length);
-    let requestProxy=http.request(url,pres=>{
-        res.writeHead(pres.statusCode,pres.headers);
-        pres.on('data',data=>{
-            res.write(data)
-        })
-        pres.on('end',()=>{
-            res.end()
-        })
-    })
-    req.on('data',data=>{
-        requestProxy.write(data)
-    })
-    req.on('end',()=>{
-        requestProxy.end();
-    })
+// const server=http.createServer((req,res)=>{
+//     let url = req.url.substring(1,req.url.length);
+//     let requestProxy=http.request(url,pres=>{
+//         res.writeHead(pres.statusCode,pres.headers);
+//         pres.on('data',data=>{
+//             res.write(data)
+//         })
+//         pres.on('end',()=>{
+//             res.end()
+//         })
+//     })
+//     req.on('data',data=>{
+//         requestProxy.write(data)
+//     })
+//     req.on('end',()=>{
+//         requestProxy.end();
+//     })
+// })
+// server.listen(8080)
+// console.log('server start ')
+
+//tcp服务器
+const server = net.createServer((c)=>{
+    console.log('client connect')
+    c.write('hello');
+    c.pipe(c);
 })
-server.listen(8080)
-console.log('server start ')
+server.on('error',err=>{
+    console.log(err)
+})
+server.listen(8080,()=>{
+    console.log('server start')
+})
