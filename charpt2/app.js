@@ -1,4 +1,4 @@
-const http=require('http');
+const http=require('https');
 const fs=require('fs');
 
 // const fs=require('fs').createReadStream('../shi.txt',{heighWaterMark:10})
@@ -108,4 +108,21 @@ const fs=require('fs');
 // server.listen(8080)
 // console.log('server start')
 
-//
+//http客户端服务
+http.get('https://www.blockchain.com/ticker',res=>{
+    const {statusCode} = res
+    console.log(1)
+    if(statusCode==='200'){
+        let data=''
+        res.on('data',(chunk)=>{
+            console.log(chunk)
+            data+=chunk
+        })
+        res.on('end',()=>{
+            console.log(data)
+        })
+        res.on('error',err=>{
+            console.log(err)
+        })
+    }
+})
