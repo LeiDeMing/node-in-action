@@ -111,15 +111,13 @@ const fs=require('fs');
 //http客户端服务
 http.get('https://www.blockchain.com/ticker',res=>{
     const {statusCode} = res
-    console.log(1)
-    if(statusCode==='200'){
-        let data=''
+    if(statusCode===200){
+        let data=[]
         res.on('data',(chunk)=>{
-            console.log(chunk)
-            data+=chunk
+            data.push(chunk)
         })
         res.on('end',()=>{
-            console.log(data)
+            console.log(Buffer.concat(data).toString())
         })
         res.on('error',err=>{
             console.log(err)
