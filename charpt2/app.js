@@ -4,6 +4,7 @@ let net = require('net');
 let stream = require('stream');
 let util = require('util');
 let events = require('events');
+let child_process=require('child_process');
 // const fs=require('fs').createReadStream('../shi.txt',{heighWaterMark:10})
 // var data=[]
 // fs.on('data',(chunk)=>{
@@ -220,17 +221,23 @@ let events = require('events');
 // })
 
 //events / 继承events模块
-function Player() {
-    event.call(this)
-}
+// function Player() {
+//     event.call(this)
+// }
 
-util.inherits(Player, event);
-let player = new Player();
-player.on('play', () => {
-    console.log('playing')
-});
-player.on('pause', () => {
-    console.log('pause')
+// util.inherits(Player, event);
+// let player = new Player();
+// player.on('play', () => {
+//     console.log('playing')
+// });
+// player.on('pause', () => {
+//     console.log('pause')
+// })
+
+// player.emit('play')
+
+//多线程
+let ls=child_process.spawn('powershell',['dir']);
+ls.stdout.on('data',(data)=>{
+    console.log(data.toString())
 })
-
-player.emit('play')
