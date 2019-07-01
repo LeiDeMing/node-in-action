@@ -1,6 +1,7 @@
-var http=require('http');
-var fs=require('fs');
-var net=require('net');
+let http=require('http');
+let fs=require('fs');
+let net=require('net');
+let stream=require('stream');
 // const fs=require('fs').createReadStream('../shi.txt',{heighWaterMark:10})
 // var data=[]
 // fs.on('data',(chunk)=>{
@@ -144,14 +145,28 @@ var net=require('net');
 // console.log('server start ')
 
 //tcp服务器
-const server = net.createServer((c)=>{
-    console.log('client connect')
-    c.write('hello');
-    c.pipe(c);
-})
-server.on('error',err=>{
-    console.log(err)
-})
-server.listen(8080,()=>{
-    console.log('server start')
-})
+// const server = net.createServer((c)=>{
+//     console.log('client connect')
+//     c.write('hello');
+//     c.pipe(c);
+// })
+// server.on('error',err=>{
+//     console.log(err)
+// })
+// server.listen(8080,()=>{
+//     console.log('server start')
+// })
+
+//stream 数据流
+// let readStream=fs.createReadStream('./shi.txt','utf-8');
+// readStream.on('data',(data)=>{
+//     console.log(data)
+// })
+// readStream.on('close',()=>{
+//     console.log('closed')
+// })
+// readStream.on('error',(err)=>{
+//     console.log(err)
+// })
+
+//pipe改写静态服务器
