@@ -243,11 +243,25 @@ let child_process=require('child_process');
 // })
 
 //fork创建子进程
-let worker=child_process.fork('worker.js',['args1']);
-worker.on('exit',()=>{
-    console.log('child worker exit')
+// let worker=child_process.fork('worker.js',['args1']);
+// worker.on('exit',()=>{
+//     console.log('child worker exit')
+// });
+// worker.send({hello:'child'});
+// worker.on('message',(msg)=>{
+//     console.log('from child:'+msg)
+// })
+
+//nodejs调用shell
+let spawn=require('child_process').spawn;
+let ls=spawn('example');
+console.log(ls)
+ls.stdout.on('data',data=>{
+    console.log('stdout: '+data);
 });
-worker.send({hello:'child'});
-worker.on('message',(msg)=>{
-    console.log('from child:'+msg)
+ls.stderr.on('data',data=>{
+    console.log('stderr: '+data)
+})
+ls.on('close',code=>{
+    console.log('child process exited with code: '+code)
 })
