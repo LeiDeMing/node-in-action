@@ -2,7 +2,8 @@ let http = require('http');
 let fs = require('fs');
 let net = require('net');
 let stream = require('stream');
-let util=require('util');
+let util = require('util');
+let events = require('events');
 // const fs=require('fs').createReadStream('../shi.txt',{heighWaterMark:10})
 // var data=[]
 // fs.on('data',(chunk)=>{
@@ -192,28 +193,44 @@ let util=require('util');
 // })
 
 //自定义stream
-let Readable=require('stream').Readable;
+// let Readable=require('stream').Readable;
 
-util.inherits(MyReadadble,Readable)
+// util.inherits(MyReadadble,Readable)
 
-function MyReadadble(array){
-    Readable.call(this,{objectModel:true})
-    this.array=array;
+// function MyReadadble(array){
+//     Readable.call(this,{objectModel:true})
+//     this.array=array;
+// }
+
+// MyReadadble.prototype._read=function(){
+//     if(this.array.length){
+//         this.push(this.array.shift());
+//     }else{
+//         this.push(null)
+//     }
+// }
+
+// const arr=['a','b','c','d','e','f','g']
+// const read=new MyReadadble(arr);
+// read.on('data',(data)=>{
+//     console.log(data)
+// })
+// read.on('end',()=>{
+//     console.log('end')
+// })
+
+//events / 继承events模块
+function Player() {
+    event.call(this)
 }
 
-MyReadadble.prototype._read=function(){
-    if(this.array.length){
-        this.push(this.array.shift());
-    }else{
-        this.push(null)
-    }
-}
+util.inherits(Player, event);
+let player = new Player();
+player.on('play', () => {
+    console.log('playing')
+});
+player.on('pause', () => {
+    console.log('pause')
+})
 
-const arr=['a','b','c','d','e','f','g']
-const read=new MyReadadble(arr);
-read.on('data',(data)=>{
-    console.log(data)
-})
-read.on('end',()=>{
-    console.log('end')
-})
+player.emit('play')
