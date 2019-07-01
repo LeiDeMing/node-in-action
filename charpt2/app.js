@@ -1,7 +1,7 @@
-let http=require('http');
-let fs=require('fs');
-let net=require('net');
-let stream=require('stream');
+let http = require('http');
+let fs = require('fs');
+let net = require('net');
+let stream = require('stream');
 // const fs=require('fs').createReadStream('../shi.txt',{heighWaterMark:10})
 // var data=[]
 // fs.on('data',(chunk)=>{
@@ -93,7 +93,7 @@ let stream=require('stream');
 //                 break;
 //             default :
 //                 console.log('other request!')
-    
+
 //         }
 //     }else{
 //         res.writeHead('302',{
@@ -170,3 +170,22 @@ let stream=require('stream');
 // })
 
 //pipe改写静态服务器
+const server = http.createServer((req, res) => {
+    const {
+        url
+    } = req;
+    console.log(req)
+    if (url === '/') {
+        let fileList = fs.readdirSync('./');
+        res.writeHead('200', {
+            'Content-Type': 'text/plain'
+        });
+        res.end(fileList.toString());
+    } else {
+        let path = './' + url;
+        let readStream = fs.createReadStream(path).pipe(res)
+    }
+})
+server.listen(8080, () => {
+    console.log('server start')
+})
