@@ -236,8 +236,18 @@ let child_process=require('child_process');
 
 // player.emit('play')
 
-//多线程
-let ls=child_process.spawn('powershell',['dir']);
-ls.stdout.on('data',(data)=>{
-    console.log(data.toString())
+//多进程
+// let ls=child_process.spawn('powershell',['dir']);
+// ls.stdout.on('data',(data)=>{
+//     console.log(data.toString())
+// })
+
+//fork创建子进程
+let worker=child_process.fork('worker.js',['args1']);
+worker.on('exit',()=>{
+    console.log('child worker exit')
+});
+worker.send({hello:'child'});
+worker.on('message',(msg)=>{
+    console.log('from child:'+msg)
 })
