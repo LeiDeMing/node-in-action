@@ -2,6 +2,7 @@ let http = require('http');
 let fs = require('fs');
 let net = require('net');
 let stream = require('stream');
+let util=require('util');
 // const fs=require('fs').createReadStream('../shi.txt',{heighWaterMark:10})
 // var data=[]
 // fs.on('data',(chunk)=>{
@@ -170,22 +171,49 @@ let stream = require('stream');
 // })
 
 //pipe改写静态服务器
-const server = http.createServer((req, res) => {
-    const {
-        url
-    } = req;
-    console.log(req)
-    if (url === '/') {
-        let fileList = fs.readdirSync('./');
-        res.writeHead('200', {
-            'Content-Type': 'text/plain'
-        });
-        res.end(fileList.toString());
-    } else {
-        let path = './' + url;
-        let readStream = fs.createReadStream(path).pipe(res)
+// const server = http.createServer((req, res) => {
+//     const {
+//         url
+//     } = req;
+//     console.log(req)
+//     if (url === '/') {
+//         let fileList = fs.readdirSync('./');
+//         res.writeHead('200', {
+//             'Content-Type': 'text/plain'
+//         });
+//         res.end(fileList.toString());
+//     } else {
+//         let path = './' + url;
+//         let readStream = fs.createReadStream(path).pipe(res)
+//     }
+// })
+// server.listen(8080, () => {
+//     console.log('server start')
+// })
+
+//自定义stream
+let Readable=require('stream').Readable;
+
+util.inherits(MyReadadble,Readable)
+
+function MyReadadble(array){
+    Readable.call(this,{objectModel:true})
+    this.array=array;
+}
+
+MyReadadble.prototype._read=function(){
+    if(this.array.length){
+        this.push(this.array.shift());
+    }else{
+        this.push(null)
     }
+}
+
+const arr=['a','b','c','d','e','f','g']
+const read=new MyReadadble(arr);
+read.on('data',(data)=>{
+    console.log(data)
 })
-server.listen(8080, () => {
-    console.log('server start')
+read.on('end',()=>{
+    console.log('end')
 })
