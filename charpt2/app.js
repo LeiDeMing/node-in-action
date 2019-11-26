@@ -253,15 +253,15 @@ let child_process=require('child_process');
 // })
 
 //nodejs调用shell
-let spawn=require('child_process').spawn;
-let ls=spawn('example');
-console.log(ls)
-ls.stdout.on('data',data=>{
-    console.log('stdout: '+data);
-});
-ls.stderr.on('data',data=>{
-    console.log('stderr: '+data)
-})
-ls.on('close',code=>{
-    console.log('child process exited with code: '+code)
-})
+// let spawn=require('child_process').spawn;
+// let ls=spawn('example');
+// console.log(ls)
+// ls.stdout.on('data',data=>{
+//     console.log('stdout: '+data);
+// });
+// ls.stderr.on('data',data=>{
+//     console.log('stderr: '+data)
+// })
+// ls.on('close',code=>{
+//     console.log('child process exited with code: '+code)
+// })
