@@ -1,7 +1,8 @@
 const Koa = require('Koa'),
     bodyParse = require('koa-bodyparser'),
+    views = require('koa-views'),
     Router = require('koa-router');
-    // db = require('./db')
+// db = require('./db')
 const app = new Koa(),
     router = new Router();
 
@@ -56,5 +57,6 @@ const app = new Koa(),
 //     .use(bodyParse())
 //     .use(router.routes());
 
+app.use(views(__dirname + 'static/index.html', { extension: 'ejs' }))
 console.log('服务开始')
 app.listen(3001)
