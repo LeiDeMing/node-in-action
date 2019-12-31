@@ -1,6 +1,7 @@
 const Koa = require('Koa'),
     bodyParse = require('koa-bodyparser'),
     views = require('koa-views'),
+    session = require('koa-session'),
     Router = require('koa-router');
 // db = require('./db')
 const app = new Koa(),
@@ -57,6 +58,28 @@ const app = new Koa(),
 //     .use(bodyParse())
 //     .use(router.routes());
 
-app.use(views(__dirname + 'static/index.html', { extension: 'ejs' }))
+// app.use(views(__dirname + 'static/index.html', { extension: 'ejs' }))
+
+//session
+const CONFIG = {
+    key: 'login',
+    maxAge: 86400000,
+    overwrite: true,
+    httpOnly: true,
+    signed: false
+};
+
+router.get('/', (ctx, next) => {
+    ctx.session.login = true;
+    ctx.body = 'Hello'
+});
+
+router.get('/verity', (ctx, next) => {
+    ctx.body = 'Login status ' + ctx.session.login
+})
+
+app
+    .use(session(CONFIG, app))
+    .use(router.routes())
 console.log('服务开始')
 app.listen(3001)
