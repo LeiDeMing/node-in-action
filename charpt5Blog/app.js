@@ -101,17 +101,39 @@ const app = new Koa(),
 //全部改写promise
 bluebird.promisifyAll(redis.RedisClient.prototype)
 bluebird.promisifyAll(redis.Multi.prototype)
-const client = redis.createClient('6379', '127.0.0.1')
+const client = redis.createClient('6379', '127.0.0.1');
 client.on('error', err => {
     console.log(err)
-})
+});
 client.on('ready', () => {
     console.log('ready')
+});
+const CONFIG = {
+    key: 'login',
+    maxAge: 86400000,
+    overwrite: true,
+    httpOnly: true,
+    signed: false,
+    store: {}
+};
+CONFIG.store.get = async function (key) {
+    const result = await client.getAsync(key)
+    CONFIG.store.destroy(key)
+    console.log(`get result: ${result}`)
+}
+CONFIG.store.set = async function (key, value) {
+    const result = await client.setAsync(key, JSON.stringify(value))
+    console.log(`set result: ${result}`)
+}
+CONFIG.store.destroy = async function (key) {
+    const result = await client.delAsync(key)
+    console.log(`del result: ${result}`)
+}
+app.use(session(CONFIG, app))
+app.use(async ctx => {
+    if (ctx.path === '/favicon.ico') return
+    ctx.session.agent = ctx.header['user-agent']
 })
-client.setAsync('name', 'Nei').then(val => {
-    console.log(val)
-})
-
 
 
 console.log('服务开始')
