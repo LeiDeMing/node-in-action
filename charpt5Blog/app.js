@@ -3,6 +3,7 @@ const Koa = require('Koa'),
     views = require('koa-views'),
     session = require('koa-session'),
     redis = require('redis'),
+    bluebird = require('bluebird'),
     Router = require('koa-router');
 // db = require('./db')
 const app = new Koa(),
@@ -84,6 +85,22 @@ const app = new Koa(),
 //     .use(router.routes())
 
 //连接redis
+// const client = redis.createClient('6379', '127.0.0.1')
+// client.on('error', err => {
+//     console.log(err)
+// })
+// client.on('ready', () => {
+//     console.log('ready')
+// })
+// client.set('name','Nei',redis.print)
+// client.get('name', (err, print) => {
+//     console.log(print)
+// })
+// client.del('name',redis.print)
+
+//全部改写promise
+bluebird.promisifyAll(redis.RedisClient.prototype)
+bluebird.promisifyAll(redis.Multi.prototype)
 const client = redis.createClient('6379', '127.0.0.1')
 client.on('error', err => {
     console.log(err)
@@ -91,10 +108,10 @@ client.on('error', err => {
 client.on('ready', () => {
     console.log('ready')
 })
-// client.set('name','Nei',redis.print)
-client.get('name', (err, print) => {
-    console.log(print)
+client.setAsync('name', 'Nei').then(val => {
+    console.log(val)
 })
+
 
 
 console.log('服务开始')
