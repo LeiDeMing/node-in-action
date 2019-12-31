@@ -2,6 +2,7 @@ const Koa = require('Koa'),
     bodyParse = require('koa-bodyparser'),
     views = require('koa-views'),
     session = require('koa-session'),
+    redis = require('redis'),
     Router = require('koa-router');
 // db = require('./db')
 const app = new Koa(),
@@ -61,25 +62,40 @@ const app = new Koa(),
 // app.use(views(__dirname + 'static/index.html', { extension: 'ejs' }))
 
 //session
-const CONFIG = {
-    key: 'login',
-    maxAge: 86400000,
-    overwrite: true,
-    httpOnly: true,
-    signed: false
-};
+// const CONFIG = {
+//     key: 'login',
+//     maxAge: 86400000,
+//     overwrite: true,
+//     httpOnly: true,
+//     signed: false
+// };
 
-router.get('/', (ctx, next) => {
-    ctx.session.login = true;
-    ctx.body = 'Hello'
-});
+// router.get('/', (ctx, next) => {
+//     ctx.session.login = true;
+//     ctx.body = 'Hello'
+// });
 
-router.get('/verity', (ctx, next) => {
-    ctx.body = 'Login status ' + ctx.session.login
+// router.get('/verity', (ctx, next) => {
+//     ctx.body = 'Login status ' + ctx.session.login
+// })
+
+// app
+//     .use(session(CONFIG, app))
+//     .use(router.routes())
+
+//连接redis
+const client = redis.createClient('6379', '127.0.0.1')
+client.on('error', err => {
+    console.log(err)
+})
+client.on('ready', () => {
+    console.log('ready')
+})
+// client.set('name','Nei',redis.print)
+client.get('name', (err, print) => {
+    console.log(print)
 })
 
-app
-    .use(session(CONFIG, app))
-    .use(router.routes())
+
 console.log('服务开始')
 app.listen(3001)
