@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "ava"
+    "test": "nyc ava"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "ava": "^2.4.0"
+    "ava": "^2.4.0",
+    "nyc": "^15.0.0"
   }
 }
