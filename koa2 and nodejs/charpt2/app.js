@@ -28,5 +28,22 @@ const app = new koa();
 //     console.log('three end');
 // });
 
+//获取响应时间
+app.use(async (ctx, next) => {
+    let sTime = new Date().getTime();
+    await next();
+    let eTIme = new Date().getTime();
+
+    ctx.response.type = 'text/html';
+    ctx.response.body = 'Hello World';
+    console.log(eTIme - sTime);
+})
+
+app.use(async (ctx, next) => {
+    console.log('中间件开始');
+    await next()
+    console.log('中间件结束')
+})
+
 console.log('服务开始')
 app.listen(3001)
