@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/koa2 and nodejs/charpt1/app.js"
+            "program": "${workspaceFolder}/koa2 and nodejs/charpt2/app.js"
         },
         {
             "type": "node",
