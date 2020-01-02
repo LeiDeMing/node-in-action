@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/charpt5Blog/app.js"
+            "program": "${workspaceFolder}/charpt6/app.js"
         },
         {
             "type": "node",
