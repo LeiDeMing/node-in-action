@@ -1,5 +1,6 @@
 const Koa = require('koa'),
     { sign } = require('jsonwebtoken'),
+    bodyParse = require('koa-bodyparser'),
     router = require('koa-router')();
 const app = new Koa(),
     secret = 'demo';
@@ -26,8 +27,8 @@ router.get('/', async (ctx, next) => {
 });
 
 router.post('/api/post', async (ctx, next) => {
-    const user = ctx.req;
-    console.log('11111')
+    const user = ctx.request;
+    console.log(user)
     if (user && user.username) {
         const { username } = user;
         const token = sign({ username }, secret, { expiresIn: '1h' });
@@ -42,8 +43,10 @@ router.post('/api/post', async (ctx, next) => {
             code: '400'
         }
     }
-})
+});
 
-app.use(router.routes())
+app
+    .use(bodyParse())
+    .use(router.routes())
 console.log('服务开始')
 app.listen(3002)
