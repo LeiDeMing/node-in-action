@@ -27,8 +27,7 @@ router.get('/', async (ctx, next) => {
 });
 
 router.post('/api/post', async (ctx, next) => {
-    const user = ctx.request;
-    console.log(user)
+    const user = ctx.request.body;
     if (user && user.username) {
         const { username } = user;
         const token = sign({ username }, secret, { expiresIn: '1h' });
