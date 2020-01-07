@@ -1,11 +1,23 @@
-module.exports={
+module.exports = {
     login: async (name, password) => {
-        let data;
+        let res;
         if (name === 'ikcamp' && password === '123') {
-            data = `Hello ${name}`;
+            res = {
+                status: 0,
+                data: {
+                    title: '个人中心',
+                    content: '欢迎进入个人中心'
+                }
+            };
         } else {
-            data = '账号错误'
+            res = {
+                status: -1,
+                data: {
+                    title: '登录失败',
+                    content: '请输入正确的账号信息'
+                }
+            };
         }
-        return data
+        return res
     }
 }

@@ -1,7 +1,7 @@
 const HomeService = require('../service/home')
 module.exports = {
     index: async (ctx, next) => {
-        ctx.response.body = '<h1>index page</h1>';
+        ctx.render('/home/index',{title:'Hello Nei'})
     },
     home: async (ctx, next) => {
         console.log(ctx.request.query);
@@ -20,7 +20,11 @@ module.exports = {
     login: async (ctx, next) => {
         console.log(ctx.request.body);
         const { name, password } = ctx.request.body;
-        let data = await HomeService.login(name,password)
-        ctx.response.body = data
+        let res = await HomeService.login(name,password)
+        if(res.status === -1){
+            await ctx.render('home/login',{data : res.data});
+        }else{
+            await ctx.render('home/success',{data : res.data})
+        }
     }
 }
