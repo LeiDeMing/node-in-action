@@ -13,13 +13,9 @@ module.exports = {
         ctx.response.body = '<h1>HOME page /:id/:name'
     },
     user: async (ctx, next) => {
-        ctx.response.body = `<form action="/user/login" method="post">
-        <input type="text" name="name" placeholder="请输入用户名 ikcamp"/>
-        <br/>
-        <input type="password" name="password" placeholder="请输入密码"/>
-        <br/>
-        <button>Go Go Go</button>
-        </form>`;
+        await ctx.render('home/login',{
+            btnName:'Go'
+        })
     },
     login: async (ctx, next) => {
         console.log(ctx.request.body);
