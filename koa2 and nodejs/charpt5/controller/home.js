@@ -1,3 +1,4 @@
+const HomeService = require('../service/home')
 module.exports = {
     index: async (ctx, next) => {
         ctx.response.body = '<h1>index page</h1>';
@@ -23,10 +24,7 @@ module.exports = {
     login: async (ctx, next) => {
         console.log(ctx.request.body);
         const { name, password } = ctx.request.body;
-        if (name === 'ikcamp' && password === '123') {
-            ctx.response.body = `Hello ${name}`;
-        } else {
-            ctx.response.body = '账号错误'
-        }
+        let data = await HomeService.login(name,password)
+        ctx.response.body = data
     }
 }
