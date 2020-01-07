@@ -4,23 +4,10 @@ const Koa = require('koa'),
     static = require('koa-static'),
     bodyParser = require('koa-bodyparser');
 const app = new Koa(),
+    middleware = require('./middleware'),
     router = require('./router');
 
-app
-    .use(bodyParser())
-    .use(nunjucks({
-        ext: 'html',
-        path: path.join(__dirname, 'views'),
-        nunjucksConfig: {
-            trimBlocks: true
-        }
-    }))
-    .use(static(
-        path.join(__dirname,'public'),
-        {
-            maxage:30 * 24 * 60 * 60 * 1000
-        }
-    ));
+middleware(app)
 router(app);
 app.listen(3000, () => {
     console.log('server is runnig')
