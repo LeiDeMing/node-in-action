@@ -3,7 +3,7 @@ const Koa = require('koa'),
 const app = new Koa(),
     router = require('./router');
 
-app.use(bodyParser);
+app.use(bodyParser());
 router(app);
 app.listen(3000,()=>{
     console.log('server is runnig')

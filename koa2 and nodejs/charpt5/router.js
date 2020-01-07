@@ -18,6 +18,7 @@ module.exports = (app) => {
         <br/>
         <input type="password" name="password" placeholder="请输入密码"/>
         <br/>
+        <button>Go Go Go</button>
         </form>`;
     });
     router.post('/user/login', async (ctx, next) => {
