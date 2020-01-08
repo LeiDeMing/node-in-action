@@ -4,7 +4,7 @@ const sequelize = new Sequelize('custom', 'root', 'ZiAixuan1314', {
     dialect: 'mysql'
 });
 sequelize.authenticate().then(() => {
-    console.log(11111)
+    console.log('sucessFull')
 }).catch(err => {
     console.log(err)
 })

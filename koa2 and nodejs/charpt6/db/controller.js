@@ -4,7 +4,7 @@ const Customer = require('./login');
 async function getAllCustomers() {
     return Customer.findAndCountAll({
         attributs: ['id', 'name', 'sex'],
-        order: [['updateAt', 'DESC']]
+        order: [['id', 'DESC']]
     })
 }
 
@@ -20,4 +20,33 @@ async function getCustomerByName(name) {
             }
         }
     })
+}
+
+async function updateCustomer(id,customer){
+    const item = await getCustomerById(id);
+    if(item){
+        return item.update(customer);
+    }else{
+        throw new Error('the customer with is id is not exist')
+    }
+}
+
+async function createCustomer(customer) {
+    return Customer.create(customer);
+}
+
+async function deleteCustomer(id) {
+    const customer = await getCustomerById(id);
+    if (customer) {
+        return customer.destroy();
+    }
+}
+
+module.exports = {
+    getAllCustomers,
+    getCustomerById,
+    getCustomerByName,
+    updateCustomer,
+    createCustomer,
+    deleteCustomer
 }

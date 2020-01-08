@@ -5,6 +5,8 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
+    "koa": "^2.11.0",
+    "koa-router": "^7.4.0",
     "mysql2": "^2.1.0",
     "sequelize": "^5.21.3"
   },
