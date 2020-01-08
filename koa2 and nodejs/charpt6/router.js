@@ -63,4 +63,15 @@ module.exports = (app) => {
     app
         .use(router.routes())
         .use(router.allowedMethods())
+        .use(async (ctx, next) => {
+            try {
+                await next()
+            } catch (err) {
+                ctx.type = jsonMIME;
+                ctx.body = {
+                    sttus: -1,
+                    message: err
+                }
+            }
+        })
 }
