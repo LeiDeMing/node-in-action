@@ -1,5 +1,5 @@
 const miLog = require('./mi-log');
 
-module.exoprts=(app)=>{
+module.exports = (app) => {
     app.use(miLog)
 }

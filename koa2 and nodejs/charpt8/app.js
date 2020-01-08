@@ -1,7 +1,7 @@
 const Koa = require('koa'),
     router = require('koa-router');
-const app = new Koa();
 const middleware = require('./middleware');
+const app = new Koa();
 
 middleware(app);
 
