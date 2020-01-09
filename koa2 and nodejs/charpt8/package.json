@@ -12,5 +12,8 @@
     "koa": "^2.11.0",
     "koa-router": "^7.4.0",
     "log4js": "^6.1.0"
+  },
+  "dependencies": {
+    "nunjucks": "^3.2.0"
   }
 }
