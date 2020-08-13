@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-08-12 14:57:34
- * @LastEditTime: 2020-08-13 11:17:27
+ * @LastEditTime: 2020-08-13 15:44:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \node-in-action\new era's node\index.js
@@ -16,6 +16,7 @@ const stream = require('stream')
 const readline = require('readline')
 const util = require('util')
 const child_process = require('child_process')
+const cluster = require('cluster')
 const txtName = './new era\'s node/demo.txt'
 
 //  fs.readFile(txtName,'utf8',(err,res)=>{
@@ -279,3 +280,26 @@ const txtName = './new era\'s node/demo.txt'
 // worker.on('message', msg => {
 //     console.log(msg)
 // })
+
+// const numCpus = require('os').cpus().length
+// if (cluster.isMaster) {
+//     console.log('Master process is:', process.pid)
+//     for (let x = 0; x < numCpus; x++) {
+//         cluster.fork()
+//     }
+//     cluster.on('exit', (worker, code, signal) => {
+//         console.log('worker process died, id ', worker.process.pid)
+//     })
+// } else {
+//     http.createServer((req, res) => {
+//         res.writeHead(200, {
+//             'Content-Type': 'text/plain'
+//         })
+//         res.end()
+//     }).listen(3389)
+//     console.log('worker started,process id ', process.pid)
+// }
+
+// console.log(process)
+
+console.log(new Date())
