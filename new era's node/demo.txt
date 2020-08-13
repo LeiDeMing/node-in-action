@@ -1,1 +1,10 @@
 code write
+code write 2 
+code write 3
+code write 4
+code write 5
+code write 6
+code write 7
+code write 8
+code write 9
+code write 10
